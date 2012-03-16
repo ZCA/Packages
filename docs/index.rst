@@ -1,6 +1,6 @@
-==========================================
-Installing Zenoss 4 on Alternate Platforms
-==========================================
+===============================================
+Zenoss Community Alliance Package Documentation
+===============================================
 Contents:
 
 .. toctree::
