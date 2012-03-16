@@ -1,6 +1,8 @@
 ==========================================
 Installing Zenoss 4 on Alternate Platforms
 ==========================================
+Contents:
+
 .. toctree::
    :maxdepth: 3
    
