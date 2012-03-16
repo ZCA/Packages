@@ -101,7 +101,7 @@ Setup User and Environment::
   
 Install Subversion Client and Pull The Source::
 
-   yum -y install svn gcc-c++ protobuf
+   yum -y install svn gcc-c++ protobuf-c
   
 Install Maven. We need the Java JDK for this::
 
