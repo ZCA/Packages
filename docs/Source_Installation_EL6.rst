@@ -1,11 +1,14 @@
-================================================
-Install Zenoss Core 4 Alpha on Centos 6.2 x86_64
-================================================
+=======================
+Source Installation EL6
+=======================
 
 .. contents::
    :depth: 4
    
-   
+
+64 Bit
+******
+  
 What Is This
 ============
 Notes from my attempt to install Alpha 4 on Centos 6.2 from Source
@@ -146,5 +149,10 @@ Answer as Follows (all Defaults)::
    RabbitMQ password [zenoss]:
 
 Go get a coffee or soda, your going to be waiting for a while
+
+
+32 Bit
+******
+TBD
 
 
