@@ -13,6 +13,8 @@ What Is This
 ============
 Notes from my attempt to install Alpha 4 on Centos 6.2 from Source
 
+***THIS DOES NOT WORK YET***
+
 The Steps
 =========
 This is the process that worked for me, it may not be the most optimal
@@ -87,12 +89,23 @@ Install Java JRE::
    chmod +x jre-6u31-linux-x64-rpm.bin
    ./jre-6u31-linux-x64-rpm.bin
   
+Install Python27 (This method MIGHT be dangerous for YUM, I don't know enough yet to  be sure)
+Maybe look at creating an RPM: https://bitbucket.org/st3fan/fxhome/changeset/9386908e927d::
+
+  wget http://www.python.org/ftp/python/2.7.2/Python-2.7.2.tgz
+  tar -zxvf Python-2.7.2.tgz
+  cd Python-2.7.2
+  ./configure -with-zlib=/usr/include
+  make
+  make install
+  echo /usr/local/lib >> /etc/ld.so.conf
+
 Setup User and Environment::
 
    useradd zenoss
    
    echo export ZENHOME=/opt/zenoss >> /home/zenoss/.bash_profile
-   echo export PYTHONPATH=$ZENHOME/lib/python >> /home/zenoss/.bash_profile
+   echo export PYTHONPATH=$ZENHOME/lib/python:$ZENHOME/ >> /home/zenoss/.bash_profile
    echo export PATH=$ZENHOME/bin:$PATH >> /home/zenoss/.bash_profile
    echo export INSTANCE_HOME=$ZENHOME >> /home/zenoss/.bash_profile
    
@@ -101,7 +114,14 @@ Setup User and Environment::
   
 Install Subversion Client and Pull The Source::
 
-   yum -y install svn gcc-c++ protobuf-c
+   yum -y install svn gcc-c++ protobuf-c libxml2-devel pango-devel
+   
+Fix some files
+ * Insert the following into line *160* of install-functions.sh. It appears
+   that this file gets created without execute permissions (despite our umask)
+   and needs to be executable::
+   
+      chmod a+x $ZENHOME/bin/zenglobalconf
   
 Install Maven. We need the Java JDK for this::
 
@@ -117,7 +137,8 @@ Install Maven. We need the Java JDK for this::
    
    
    su - zenoss
-   PATH=$PATH:/usr/java/jdk1.6.0_31/bin/
+   PATH=/opt/zenoss/bin/:$PATH:/usr/java/jdk1.6.0_31/bin/
+   PYTHONPATH=$PYTHONPATH:$ZENHOME/
    cd /tmp
    svn co http://dev.zenoss.org/svn/trunk/inst zenossinst
    cd zenossinst
