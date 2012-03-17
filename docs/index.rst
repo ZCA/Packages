@@ -7,6 +7,7 @@ Contents:
    :maxdepth: 3
    
    package_matrix
+   setup_build_server
    Building_EL6_Packages
    Building_Ubuntu_Packages
    Building_SUSE_Packages
