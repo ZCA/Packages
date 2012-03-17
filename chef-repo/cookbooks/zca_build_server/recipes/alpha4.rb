@@ -12,7 +12,7 @@ service "iptables" do
 	action :disable
 end
 
-%w{tk unixODBC perl-DBI net-snmp net-snmp-utils gmp bc libgomp libxslt unzip binutils gcc make swig autoconf wget svn gcc-c++ protobuf-c libxml2-devel pango-devel}.each do |pkg|
+%w{tk unixODBC perl-DBI net-snmp net-snmp-utils gmp bc libgomp libxslt unzip binutils gcc make swig autoconf wget gcc-c++ protobuf-c libxml2-devel pango-devel}.each do |pkg|
   package pkg do
     action :install
   end
@@ -38,6 +38,9 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 		Chef::Log.debug("TODO: Figure out what to do with these packages #{node['platform']} #{node['platform_version']}")
 	end
 end
+
+#Subversion
+include_recipe "subversion"
 
 #MySQL
 include_recipe "mysql::server55"
