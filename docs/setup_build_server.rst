@@ -53,7 +53,7 @@ Run the following to install chef client on Ubuntu::
    sudo ruby setup.rb --no-format-executable
    sudo gem install chef
    #Ensure it works
-   chef-client -v
+   chef-solo -v
 
 
 Configure Chef Solo
@@ -76,3 +76,7 @@ Chef Will Take It From Here
 That should pretty much do it, just kick chef-solo into gear using our new alias::
 
   chefsolo
+  
+**I noticed on Centos 5.7, that something in the RabbitMQ recipe croaks on first
+execution, running chefsolo a second time (doing nothing else), results in everything
+completing without error**
