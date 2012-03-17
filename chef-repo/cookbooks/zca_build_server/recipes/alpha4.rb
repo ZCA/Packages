@@ -45,11 +45,19 @@ include_recipe "java"
 include_recipe "maven::maven3"
 
 #Python
-=begin
-@TODO: Come back to this, Based on the recipe I dont think it honors the node attribute for version to install
-# and is instead installing 2.6
-include_recipe "python"
-=end
+#Pretty sure Ubuntu has packages available, but rhel derivs need from source
+if platform?(%w{ redhat centos fedora suse scientific amazon })
+	#The version is set in the node attributes
+	include_recipe "python::source"
+else
+  package "python" do
+	version #{node['python']['version']}
+    action :install
+  end	
+end
+
+
+
 #Create Zenoss User
 user "zenoss" do 
 	comment "zenoss user"
