@@ -17,16 +17,26 @@ end
     action :install
   end
 end
-#These Packages failed on Centos 5.7, so handle them as such
-if node.platform_version != "5.7" && platform?(%w{ redhat centos fedora suse scientific amazon })
-	["liberation-fonts-common", "libgcj"].each do |pkg|
-	  package pkg do
+#rhel specific packages
+if platform?(%w{ redhat centos fedora suse scientific amazon })
+	package "rpm-build" do
 		action :install
-	  end
 	end
-	
-else
-	Chef::Log.debug("TODO: Figure out what to do with these packages #{node['platform']} #{node['platform_version']}")
+	#Create rpmbuild User
+	user "rpmbuild" do 
+		comment "rpmbuild user"
+r	end
+	#These Packages failed on Centos 5.7, so handle them as such
+	if node.platform_version != "5.7"
+		["liberation-fonts-common", "libgcj"].each do |pkg|
+		  package pkg do
+			action :install
+		  end
+		end
+		
+	else
+		Chef::Log.debug("TODO: Figure out what to do with these packages #{node['platform']} #{node['platform_version']}")
+	end
 end
 
 #MySQL
@@ -67,5 +77,7 @@ end
 #Setup users .bashrc
 template "/home/zenoss/.bashrc" do
   source "zenoss_bashrc.erb"
+  owner "zenoss"
+  group "zenoss"
 end
 #Copy a template .bash_profile file so set environment variables
