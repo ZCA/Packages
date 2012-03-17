@@ -12,7 +12,7 @@ service "iptables" do
 	action :disable
 end
 
-%w{tk unixODBC perl-DBI net-snmp net-snmp-utils gmp bc libgomp libxslt unzip binutils gcc make swig autoconf wget gcc-c++ protobuf-c libxml2-devel pango-devel libgcj}.each do |pkg|
+%w{tk unixODBC perl-DBI net-snmp net-snmp-utils gmp bc libgomp libxslt unzip binutils gcc make swig autoconf wget gcc-c++ libxml2-devel pango-devel libgcj}.each do |pkg|
   package pkg do
     action :install
   end
@@ -36,12 +36,13 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 		
 	else
 		#Centos 5x its liberation-fonts, not common
-		["liberation-fonts-common"].each do |pkg|
+		["liberation-fonts"].each do |pkg|
 			package pkg do
 				action :install
 			end
 		end
-		Chef::Log.debug("TODO: Figure out what to do with these packages #{node['platform']} #{node['platform_version']}")
+		#Need to do something about protobuf-c on CENTOS5.7
+		Chef::Log.debug("TODO: Figure out what to do with protobuf-c package #{node['platform']} #{node['platform_version']}")
 	end
 end
 
