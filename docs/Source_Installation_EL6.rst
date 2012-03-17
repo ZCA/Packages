@@ -135,7 +135,8 @@ Install Maven. We need the Java JDK for this::
    tar -zxvf apache-maven-3.0.4-bin.tar.gz -C /opt
    ln -s /opt/apache-maven-3.0.4/bin/mvn /usr/sbin/mvn 
    
-   
+Setup for building::
+      
    su - zenoss
    PATH=/opt/zenoss/bin/:$PATH:/usr/java/jdk1.6.0_31/bin/
    PYTHONPATH=$PYTHONPATH:$ZENHOME/

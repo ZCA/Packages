@@ -1,1 +1,5 @@
-{ "run_list": "role[zca_build_server]" }
+{ 
+	"java": {"install_flavor": "oracle"},
+	"python": {"distribute_install_py_version": "2.7"},
+	"run_list": "role[zca_build_server]" 
+}

@@ -19,13 +19,13 @@ Centos 6
 Run the following to install chef client on Centos 6::
 
    rpm -Uvh http://rbel.frameos.org/rbel6
-   sudo yum install ruby ruby-devel ruby-ri ruby-rdoc ruby-shadow gcc gcc-c++ automake autoconf make curl dmidecode
+   yum -y install ruby ruby-devel ruby-ri ruby-rdoc ruby-shadow gcc gcc-c++ automake autoconf make curl dmidecode
    cd /tmp
    curl -O http://production.cf.rubygems.org/rubygems/rubygems-1.8.10.tgz
    tar zxf rubygems-1.8.10.tgz
    cd rubygems-1.8.10
-   sudo ruby setup.rb --no-format-executable
-   sudo gem install chef --no-ri --no-rdoc
+   ruby setup.rb --no-format-executable
+   gem install chef --no-ri --no-rdoc
    #Ensure it works
    chef-solo -v
    
@@ -62,10 +62,17 @@ Run the following commands to get setup to use the ZCA build cookbooks::
 
       
    cd /tmp
+   yum -y install wget unzip
    wget --no-check-certificate https://github.com/ZCA/Packages/zipball/master -O master.zip
    #the output folder name is random, hence the move
-   unzip master && mv ZCA-Packages* zca_packages
+   unzip master.zip && mv ZCA-Packages* zca_packages
    mkdir /etc/chef
    cp /tmp/zca_packages/chef-repo/.chef/solo.rb /etc/chef
    #Create an alias to save typing, not required
    alias chefsolo='chef-solo -c /tmp/zca_packages/chef-repo/.chef/solo.rb -j /tmp/zca_packages/chef-repo/nodes/zca_build_server.json'
+   
+Chef Will Take It From Here
+===========================
+That should pretty much do it, just kick chef-solo into gear using our new alias::
+
+  chefsolo

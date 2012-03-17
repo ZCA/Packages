@@ -1,0 +1,5 @@
+.rake_test_cache
+
+#Trim some cruft that builds up during chef runs
+chef-repo/chef-stacktrace.out
+chef-repo/*.bin
