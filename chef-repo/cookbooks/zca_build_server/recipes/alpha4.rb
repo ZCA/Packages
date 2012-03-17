@@ -13,15 +13,17 @@ service "iptables" do
 	action :disable
 end
 
-%w{tk unixODBC perl-DBI net-snmp net-snmp-utils gmp bc libgomp libxslt unzip binutils gcc make swig autoconf wget gcc-c++ libxml2-devel pango-devel libgcj}.each do |pkg|
+%w{tk unixODBC net-snmp net-snmp-utils gmp bc libgomp libxslt unzip binutils gcc make swig autoconf wget gcc-c++ libxml2-devel pango-devel libgcj}.each do |pkg|
   package pkg do
     action :install
   end
 end
 #rhel specific packages
 if platform?(%w{ redhat centos fedora suse scientific amazon })
-	package "rpm-build" do
-		action :install
+	%w{ perl-DBI rpm-build }.each do |pkg|
+		package pkg do
+			action :install
+		end
 	end
 	#Create rpmbuild User
 	user "rpmbuild" do 
@@ -45,6 +47,12 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 			end
 		end
 		#Chef::Log.debug("TODO: Figure out what to do with protobuf-c package #{node['platform']} #{node['platform_version']}")
+	end
+elsif platform?(%w{ ubuntu })
+	%w{ libdbi-perl }.each do |pkg|
+		package pkg do
+			action :install
+		end
 	end
 end
 
