@@ -63,7 +63,7 @@ Run the following commands to get setup to use the ZCA build cookbooks::
       
    cd /tmp
    yum -y install wget unzip
-   wget --no-check-certificate https://github.com/ZCA/Packages/zipball/master -O master.zip
+   wget --no-check-certificate -N https://github.com/ZCA/Packages/zipball/master -O master.zip
    #the output folder name is random, hence the move
    unzip master.zip && mv ZCA-Packages* zca_packages
    mkdir /etc/chef
