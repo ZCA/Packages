@@ -34,11 +34,6 @@ include_recipe "mysql::server55"
 
 #Memcached
 include_recipe "memcached"
-#enable and start it
-service "memcached" do
-	action :enable
-	action :start
-end
 
 include_recipe "erlang"
 include_recipe "rabbitmq::zenoss"
@@ -47,10 +42,7 @@ include_recipe "rabbitmq::zenoss"
 include_recipe "java"
 
 #We need Maven as wel
-=begin
-@TODO Come Back, it failed with 404
 include_recipe "maven::maven3"
-=end
 
 #Python
 =begin

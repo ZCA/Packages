@@ -3,3 +3,5 @@
 #Trim some cruft that builds up during chef runs
 chef-repo/chef-stacktrace.out
 chef-repo/*.bin
+chef-repo/*.tar.gz
+chef-repo/*.tgz
