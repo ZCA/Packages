@@ -25,7 +25,7 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 	#Create rpmbuild User
 	user "rpmbuild" do 
 		comment "rpmbuild user"
-r	end
+	end
 	#These Packages failed on Centos 5.7, so handle them as such
 	if node.platform_version != "5.7"
 		["liberation-fonts-common", "libgcj"].each do |pkg|
