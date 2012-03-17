@@ -43,7 +43,13 @@ mysql_packages.each do |mysql_pack|
 end
 
 if platform?(%w{ redhat centos fedora suse scientific amazon })
-  package 'ruby-mysql'
+  Chef::Log.info(node.platform_version)
+  if node.platform_version != "5.7"
+	#No package found on 5.7, so skipping
+	package 'ruby-mysql'
+  else
+	Chef::Log.info("Skipping ruby-mysql on #{node['platform']} #{node['platform_version']}")
+  end
 elsif platform?(%w{ debian ubuntu })
   package "libmysql-ruby"
 else
