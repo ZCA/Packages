@@ -39,13 +39,12 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 		#We need some stuff from epel
 		include_recipe "yum::epel"
 		#Centos 5x its liberation-fonts, not common
-		["liberation-fonts"].each do |pkg|
+		["liberation-fonts", "protobuf-devel"].each do |pkg|
 			package pkg do
 				action :install
 			end
 		end
-		#Need to do something about protobuf-c on CENTOS5.7: http://mirror.its.sfu.ca/mirror/CentOS-Third-Party/epel/6/i386/protobuf-c-0.15-2.el6.i686.rpm
-		Chef::Log.debug("TODO: Figure out what to do with protobuf-c package #{node['platform']} #{node['platform_version']}")
+		#Chef::Log.debug("TODO: Figure out what to do with protobuf-c package #{node['platform']} #{node['platform_version']}")
 	end
 end
 
