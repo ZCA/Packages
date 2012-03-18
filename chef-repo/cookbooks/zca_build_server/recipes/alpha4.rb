@@ -13,14 +13,14 @@ service "iptables" do
 	action :disable
 end
 
-%w{tk unixODBC bc libgomp libxslt unzip binutils gcc make swig autoconf wget gcc-c++ libxml2-devel pango-devel libgcj}.each do |pkg|
+%w{tk unixODBC bc  unzip binutils gcc make swig autoconf wget }.each do |pkg|
   package pkg do
     action :install
   end
 end
 #rhel specific packages
 if platform?(%w{ redhat centos fedora suse scientific amazon })
-	%w{ perl-DBI rpm-build net-snmp net-snmp-utils gmp }.each do |pkg|
+	%w{ perl-DBI rpm-build net-snmp net-snmp-utils gmp libgomp libxslt gcc-c++ libxml2-devel pango-devel}.each do |pkg|
 		package pkg do
 			action :install
 		end
@@ -49,7 +49,7 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 		#Chef::Log.debug("TODO: Figure out what to do with protobuf-c package #{node['platform']} #{node['platform_version']}")
 	end
 elsif platform?(%w{ ubuntu })
-	%w{ libdbi-perl snmp snmpd libgmp3-dev }.each do |pkg|
+	%w{ libdbi-perl snmp snmpd libgmp3-dev build-essential libxml2-dev libpango1.0-dev libgcj10 }.each do |pkg|
 		package pkg do
 			action :install
 		end
