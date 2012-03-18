@@ -92,6 +92,8 @@ end
 user "zenoss" do 
 	comment "zenoss user"
 	home "/home/zenoss"
+	shell "/bin/bash"
+	supports :manage_home => true
 end
 
 #Setup users .bashrc
