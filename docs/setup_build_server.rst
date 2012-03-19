@@ -77,5 +77,5 @@ That should pretty much do it, just kick chef-solo into gear using our new alias
   chefzca
   
 **I noticed on Centos 5.7, that something in the RabbitMQ recipe croaks on first
-execution, running chefsolo a second time (doing nothing else), results in everything
+execution, running chefzca a second time (doing nothing else), results in everything
 completing without error**
