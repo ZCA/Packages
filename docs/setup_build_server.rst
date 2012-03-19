@@ -51,7 +51,7 @@ Run the following to install chef client on Ubuntu::
    tar zxf rubygems-1.8.10.tgz
    cd rubygems-1.8.10
    sudo ruby setup.rb --no-format-executable
-   sudo gem install chef
+   sudo gem install chef --no-ri --no-rdoc
    #Ensure it works
    chef-solo -v
 
@@ -62,7 +62,6 @@ Run the following commands to get setup to use the ZCA build cookbooks::
 
       
    cd /tmp
-   yum -y install wget unzip
    wget --no-check-certificate -N https://github.com/ZCA/Packages/zipball/master -O master.zip
    #the output folder name is random, hence the move
    unzip master.zip && mv ZCA-Packages* zca_packages
