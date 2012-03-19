@@ -68,13 +68,13 @@ Run the following commands to get setup to use the ZCA build cookbooks::
    mkdir /etc/chef
    cp /tmp/zca_packages/chef-repo/.chef/solo.rb /etc/chef
    #Create an alias to save typing, not required
-   alias chefsolo='chef-solo -c /tmp/zca_packages/chef-repo/.chef/solo.rb -j /tmp/zca_packages/chef-repo/nodes/zca_build_server.json'
+   alias chefzca='chef-solo -c /tmp/zca_packages/chef-repo/.chef/solo.rb -j /tmp/zca_packages/chef-repo/nodes/zca_build_server.json'
    
 Chef Will Take It From Here
 ===========================
 That should pretty much do it, just kick chef-solo into gear using our new alias::
 
-  chefsolo
+  chefzca
   
 **I noticed on Centos 5.7, that something in the RabbitMQ recipe croaks on first
 execution, running chefsolo a second time (doing nothing else), results in everything
