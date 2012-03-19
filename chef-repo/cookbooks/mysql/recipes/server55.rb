@@ -12,12 +12,17 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 	rpm_list.each do |rpm_file|
 		remote_file "/tmp/#{rpm_file}" do
 		  source "http://www.mysql.com/get/Downloads/MySQL-5.5/#{rpm_file}/from/http://mysql.llarian.net/"
-		  action :create_if_missing
+		  #Avoid downloading every single execution.
+		  not_if "rpm -qa | egrep -qi 'MySQL-server-5.5'"
+		  notifies :install, "rpm_package[#{rpm_file}]", :immediately
 		end
 		rpm_package "#{rpm_file}" do
 		  source "/tmp/#{rpm_file}"
 		  only_if {::File.exists?("/tmp/#{rpm_file}")}
-		  action :install
+		  #Action nothing seems odd at first glance. What happens is that by default we dont want to try install this.
+		  #Instead, if the remote_file above results in a file download, it notified this to and sets the action to install.
+		  #This results in idempotent download-->install
+		  action :nothing
 		end
 	end
 elsif platform?(%w{ ubuntu})
@@ -25,12 +30,17 @@ elsif platform?(%w{ ubuntu})
 	Chef::Log.info("#{deb_file}")
 	remote_file "/tmp/#{deb_file}" do
 	  source "http://www.mysql.com/get/Downloads/MySQL-5.5/#{deb_file}/from/http://mysql.he.net/"
-	  action :create_if_missing
+	  #Avoid downloading every single execution.
+	  not_if "dpkg --list | egrep -q mysql | grep 5.5"
+	  notifies :install, "dpkg_package[#{deb_file}]", :immediately
 	end
 	dpkg_package "#{deb_file}" do
 	  source "/tmp/#{deb_file}"
 	  only_if {::File.exists?("/tmp/#{deb_file}")}
-	  action :install	
+		  #Action nothing seems odd at first glance. What happens is that by default we dont want to try install this.
+		  #Instead, if the remote_file above results in a file download, it notified this to and sets the action to install.
+		  #This results in idempotent download-->install
+	  action :nothing	
 	end
 end
 
