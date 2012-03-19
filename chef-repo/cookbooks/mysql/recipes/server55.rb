@@ -12,9 +12,11 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 	rpm_list.each do |rpm_file|
 		remote_file "/tmp/#{rpm_file}" do
 		  source "http://www.mysql.com/get/Downloads/MySQL-5.5/#{rpm_file}/from/http://mysql.llarian.net/"
-		  #Avoid downloading every single execution.
+		  #Don't Download if its already installed
 		  not_if "rpm -qa | egrep -qi 'MySQL-server-5.5'"
 		  notifies :install, "rpm_package[#{rpm_file}]", :immediately
+		  #If we already downloaded it, don't download it again. Unlikely to be useful in the real world, but a time saver during dev/testing
+		  action :create_if_missing
 		end
 		rpm_package "#{rpm_file}" do
 		  source "/tmp/#{rpm_file}"
@@ -30,9 +32,11 @@ elsif platform?(%w{ ubuntu})
 	Chef::Log.info("#{deb_file}")
 	remote_file "/tmp/#{deb_file}" do
 	  source "http://www.mysql.com/get/Downloads/MySQL-5.5/#{deb_file}/from/http://mysql.llarian.net/"
-	  #Avoid downloading every single execution.
+	  #Don't Download if its already installed
 	  not_if "dpkg --list | egrep -q mysql | grep 5.5"
 	  notifies :install, "dpkg_package[#{deb_file}]", :immediately
+	  #If we already downloaded it, don't download it again. Unlikely to be useful in the real world, but a time saver during dev/testing
+	  action :create_if_missing
 	end
 	dpkg_package "#{deb_file}" do
 	  source "/tmp/#{deb_file}"
