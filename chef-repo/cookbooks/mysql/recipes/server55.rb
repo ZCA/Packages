@@ -29,7 +29,7 @@ elsif platform?(%w{ ubuntu})
 	deb_file="mysql-5.5.21-debian6.0-#{arch}.deb"
 	Chef::Log.info("#{deb_file}")
 	remote_file "/tmp/#{deb_file}" do
-	  source "http://www.mysql.com/get/Downloads/MySQL-5.5/#{deb_file}/from/http://mysql.he.net/"
+	  source "http://www.mysql.com/get/Downloads/MySQL-5.5/#{deb_file}/from/http://mysql.llarian.net/"
 	  #Avoid downloading every single execution.
 	  not_if "dpkg --list | egrep -q mysql | grep 5.5"
 	  notifies :install, "dpkg_package[#{deb_file}]", :immediately
