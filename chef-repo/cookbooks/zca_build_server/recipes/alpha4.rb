@@ -67,7 +67,8 @@ end
 include_recipe "subversion"
 
 #MySQL
-include_recipe "mysql::server55"
+#Come back to this
+#include_recipe "mysql::server55"
 
 #Memcached
 include_recipe "memcached"
