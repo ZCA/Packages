@@ -49,11 +49,18 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 		#Chef::Log.debug("TODO: Figure out what to do with protobuf-c package #{node['platform']} #{node['platform_version']}")
 	end
 elsif platform?(%w{ ubuntu })
-	%w{ libdbi-perl snmp snmpd libgmp3-dev build-essential libxml2-dev libpango1.0-dev libgcj10 }.each do |pkg|
+	%w{ libdbi-perl libsnmp-base libsnmp15 snmp snmpd libsnmp-dev libgmp3-dev build-essential libxml2-dev libreadline6-dev}.each do |pkg|
 		package pkg do
 			action :install
 		end
 	end
+	#Split for readability
+	%w{ libpango1.0-dev libgcj10 ccache gcc-4.4 libxslt1-dev libcairo2-dev libglib2.0-dev libevent-dev ldap-utils libldap2-dev libsasl2-dev}.each do |pkg|
+		package pkg do
+			action :install
+		end
+	end
+	
 end
 
 #Subversion
