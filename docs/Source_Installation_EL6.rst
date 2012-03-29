@@ -15,8 +15,12 @@ Notes from my attempt to install Alpha 4 on Centos 6.2 from Source
 
 ***THIS DOES NOT WORK YET***
 
-The Steps
-=========
+
+Prepare Server For Building
+===========================
+Manually Prepare The Server
+***************************
+
 This is the process that worked for me, it may not be the most optimal
 and your mileage may vary. In some cases I've split groups of commands
 onto multiple lines for readability
@@ -116,12 +120,6 @@ Install Subversion Client and Pull The Source::
 
    yum -y install svn gcc-c++ protobuf-c libxml2-devel pango-devel
    
-Fix some files
- * Insert the following into line *160* of install-functions.sh. It appears
-   that this file gets created without execute permissions (despite our umask)
-   and needs to be executable::
-   
-      chmod a+x $ZENHOME/bin/zenglobalconf
   
 Install Maven. We need the Java JDK for this::
 
@@ -134,16 +132,41 @@ Install Maven. We need the Java JDK for this::
    http://linux-files.com//maven/binaries/apache-maven-3.0.4-bin.tar.gz
    tar -zxvf apache-maven-3.0.4-bin.tar.gz -C /opt
    ln -s /opt/apache-maven-3.0.4/bin/mvn /usr/sbin/mvn 
+
+ 
+Prepare the Server using Chef-Solo
+**********************************
+:doc:`setup_build_server`
+
+Start The Build Process
+=======================
    
 Setup for building::
       
    su - zenoss
    PATH=/opt/zenoss/bin/:$PATH:/usr/java/jdk1.6.0_31/bin/
    PYTHONPATH=$PYTHONPATH:$ZENHOME/
+   
+   
+Clone the svn repo::
+
    cd /tmp
    svn co http://dev.zenoss.org/svn/trunk/inst zenossinst
+      
+Kick off the installation script::
+
    cd zenossinst
    ./install.sh
+
+
+Fix some files
+ * Insert the following into line *160* of install-functions.sh. It appears
+   that this file gets created without execute permissions (despite our umask)
+   and needs to be executable::
+   
+      chmod a+x $ZENHOME/bin/zenglobalconf
+
+   
 
 Answer as Follows (all Defaults)::
 
