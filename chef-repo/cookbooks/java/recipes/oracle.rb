@@ -22,6 +22,8 @@ java_home = node['java']["java_home"]
 arch = node['java']['arch']
 jdk_version = node['java']['jdk_version']
 
+Chef::Log.info("Trying to install Java #{jdk_version}, on #{arch} into #{java_home}")
+
 #convert version number to a string if it isn't already
 if jdk_version.instance_of? Fixnum
   jdk_version = jdk_version.to_s
@@ -42,7 +44,10 @@ ruby_block  "set-env-java-home" do
   end
 end
 
+
+
 java_ark "jdk" do
+  Chef::Log.info("tarball url #{tarball_url} and checksum #{tarball_checksum}")
   url tarball_url
   checksum tarball_checksum
   app_home java_home

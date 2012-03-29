@@ -51,14 +51,20 @@ when "debian", "ubuntu"
   end
   package "rabbitmq-server"
 when "redhat", "centos", "scientific"
-  remote_file "/tmp/rabbitmq-server-2.6.1-1.noarch.rpm" do
-    source "https://www.rabbitmq.com/releases/rabbitmq-server/v2.6.1/rabbitmq-server-2.6.1-1.noarch.rpm"
-    action :create_if_missing
+  include_recipe "yum::epel"
+  yum_repository "erlang" do
+    name "EPELErlangrepo"
+    url "http://repos.fedorapeople.org/repos/peter/erlang/epel-5Server/$basearch"
+    description "Updated erlang yum repository for RedHat / Centos 5.x - #{node['kernel']['machine']}"
+    action :add
+    only_if { node[:platform_version].to_f >= 5.0 && node[:platform_version].to_f < 6.0 }
   end
-  rpm_package "/tmp/rabbitmq-server-2.6.1-1.noarch.rpm" do
-    action :install
-  end
+  package "rabbitmq-server"
+else
+  package "rabbitmq-server"
 end
+
+
 
 if node[:rabbitmq][:cluster]
     # If this already exists, don't do anything
