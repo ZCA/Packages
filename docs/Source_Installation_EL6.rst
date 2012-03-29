@@ -134,7 +134,9 @@ Install Maven. We need the Java JDK for this::
    ln -s /opt/apache-maven-3.0.4/bin/mvn /usr/sbin/mvn 
    
 Setup for building::
-      
+
+   mkdir /opt/zenoss
+   chown zenoss:zenoss /opt/zenoss     
    su - zenoss
    PATH=/opt/zenoss/bin/:$PATH:/usr/java/jdk1.6.0_31/bin/
    PYTHONPATH=$PYTHONPATH:$ZENHOME/
@@ -149,8 +151,6 @@ Start The Build Process
    
 Clone the svn repo::
 
-   mkdir /opt/zenoss
-   chown zenoss:zenoss /opt/zenoss
    sudo su - zenoss
    umask 022
    cd /tmp
