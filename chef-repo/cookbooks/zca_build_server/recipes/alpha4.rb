@@ -67,8 +67,13 @@ end
 include_recipe "subversion"
 
 #MySQL
-#Come back to this
-#include_recipe "mysql::server55"
+if platform?(%w{ redhat centos fedora suse scientific amazon })
+	include_recipe "mysql::server55"
+elsif platform?(%w{ ubuntu })
+	Chef::Log.warn("So far, I have not found a clean method to install mysql 5.5 on ubuntu. With a little time I'm sure its possible, but as of right now, no dice")	
+end
+
+
 
 #Memcached
 include_recipe "memcached"
@@ -110,4 +115,17 @@ template "/home/zenoss/.bashrc" do
   owner "zenoss"
   group "zenoss"
 end
-#Copy a template .bash_profile file so set environment variables
+
+#Create Zenoss installation directory
+if platform?(%w{ redhat centos fedora suse scientific amazon })
+	zenhome="/opt/zenoss"
+elsif platform?(%w{ ubuntu })
+	zenhome="/usr/local/zenoss"
+end
+#Now that we know WHERE its going, create it and set permissions
+directory "#{zenhome}" do
+  owner "zenoss"
+  group "zenoss"
+  mode "0755"
+  action :create
+end

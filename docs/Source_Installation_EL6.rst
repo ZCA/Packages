@@ -149,7 +149,10 @@ Start The Build Process
    
 Clone the svn repo::
 
+   mkdir /opt/zenoss
+   chown zenoss:zenoss /opt/zenoss
    sudo su - zenoss
+   umask 022
    cd /tmp
    svn co http://dev.zenoss.org/svn/trunk/inst zenossinst
       
