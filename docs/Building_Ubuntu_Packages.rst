@@ -8,3 +8,4 @@ Building Ubuntu Packages
 References
 ----------
 * http://grumbel.blogspot.com/2010/05/how-to-build-ubuntu-package.html
+* http://answers.oreilly.com/topic/451-how-to-create-an-ubuntu-package/
