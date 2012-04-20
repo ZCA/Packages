@@ -8,7 +8,7 @@
 #Download MySQL RPMs
 arch="#{node['kernel']['machine']}"
 if platform?(%w{ redhat centos fedora suse scientific amazon })
-	rpm_list = ["MySQL-client-5.5.21-1.linux2.6.#{arch}.rpm", "MySQL-devel-5.5.21-1.linux2.6.#{arch}.rpm", "MySQL-server-5.5.21-1.linux2.6.#{arch}.rpm"]
+	rpm_list = ["MySQL-client-5.5.23-1.linux2.6.#{arch}.rpm", "MySQL-devel-5.5.23-1.linux2.6.#{arch}.rpm", "MySQL-server-5.5.23-1.linux2.6.#{arch}.rpm"]
 	rpm_list.each do |rpm_file|
 		remote_file "/tmp/#{rpm_file}" do
 		  source "http://www.mysql.com/get/Downloads/MySQL-5.5/#{rpm_file}/from/http://mysql.llarian.net/"
@@ -28,7 +28,7 @@ if platform?(%w{ redhat centos fedora suse scientific amazon })
 		end
 	end
 elsif platform?(%w{ ubuntu})
-	deb_file="mysql-5.5.21-debian6.0-#{arch}.deb"
+	deb_file="mysql-5.5.23-debian6.0-#{arch}.deb"
 	Chef::Log.info("#{deb_file}")
 	remote_file "/tmp/#{deb_file}" do
 	  source "http://www.mysql.com/get/Downloads/MySQL-5.5/#{deb_file}/from/http://mysql.llarian.net/"
