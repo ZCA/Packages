@@ -22,6 +22,7 @@
 default[:yum][:exclude]
 default[:yum][:installonlypkgs]
 
+# EPEL
 default['yum']['epel_release'] = case node['platform_version'].to_i
                                   when 6
                                     "6-5"
@@ -30,4 +31,14 @@ default['yum']['epel_release'] = case node['platform_version'].to_i
                                   when 4
                                     "4-10"
                                   end
+
+# REMI       
+default['yum']['remi_release'] = case node['platform_version'].to_i
+                                  when 6
+                                    "6"
+                                  when 5
+                                    "5"
+                                  end            
+
+
 default['yum']['ius_release'] = '1.0-8'

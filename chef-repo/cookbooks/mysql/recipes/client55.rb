@@ -11,12 +11,14 @@ include_recipe "mysql::cleanup_mysql"
 #Download MySQL RPMs
 arch="#{node['kernel']['machine']}"
 if platform?(%w{ redhat centos fedora suse scientific amazon })
-	rpm_list = ["MySQL-client-5.5.23-1.linux2.6.#{arch}.rpm", "MySQL-devel-5.5.23-1.linux2.6.#{arch}.rpm", "MySQL-server-5.5.23-1.linux2.6.#{arch}.rpm"]
+    Chef::Log.info("=======================================================================================")
+	rpm_list = ["MySQL-client-5.5.21-1.linux2.6.#{arch}.rpm", "MySQL-devel-5.5.21-1.linux2.6.#{arch}.rpm", "MySQL-shared-5.5.21-1.linux2.6.#{arch}.rpm"]
+	Chef::Log.info("installing #{rpm_list}")
 	rpm_list.each do |rpm_file|
 		remote_file "/tmp/#{rpm_file}" do
 		  source "http://www.mysql.com/get/Downloads/MySQL-5.5/#{rpm_file}/from/http://mysql.llarian.net/"
 		  #Don't Download if its already installed
-		  not_if "rpm -qa | egrep -qi 'MySQL-server-5.5'"
+		  not_if "rpm -qa | egrep -qi 'MySQL-shared-5.5'"
 		  notifies :install, "rpm_package[#{rpm_file}]", :immediately
 		  #If we already downloaded it, don't download it again. Unlikely to be useful in the real world, but a time saver during dev/testing
 		  action :create_if_missing
@@ -35,7 +37,7 @@ elsif platform?(%w{ ubuntu})
     # adding the mysql 5.5 ubuntu repo
     Chef::Log.info("adding nathan's ppa for #{node['lsb']['codename']}")
     # add the Nginx PPA; grab key from keyserver
-    apt_repository "mysql" do
+    apt_repository "mysql" do	
       uri "http://ppa.launchpad.net/nathan-renniewaldock/ppa/ubuntu"
       distribution node['lsb']['codename']
       components ["main"]
@@ -43,7 +45,7 @@ elsif platform?(%w{ ubuntu})
       key "C8716B42"
     end
 
-    %w{mysql-client-5.5 mysql-server-core-5.5 mysql-server-5.5 libmysqlclient-dev}.each do |pkg|
+    %w{mysql-client-5.5 libmysqlclient-dev}.each do |pkg|
         package pkg do
             action :install
         end
@@ -51,18 +53,4 @@ elsif platform?(%w{ ubuntu})
 
 end 
 
-#Enable and Start MySQL
-service "mysql" do
-	supports :status => true, :restart => true, :reload => true
-	action [ :enable, :start ]
-end
 
-#Set Password
-execute "assign-root-password" do
-	command "#{node['mysql']['mysqladmin_bin']} -u root password \"#{node['mysql']['server_root_password']}\""
-	action :run
-end
-execute "assign-root-password" do
-	command "#{node['mysql']['mysqladmin_bin']} -u root -h localhost password \"#{node['mysql']['server_root_password']}\""
-	action :run
-end
