@@ -22,6 +22,7 @@ include_recipe "subversion"
 
 #MySQL
 #Come back to this
+include_recipe "mysql::server55"
 include_recipe "mysql::client55"
 
 #Memcached
