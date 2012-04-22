@@ -1,0 +1,12 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# User specific aliases and functions
+export ZENHOME=/opt/zenoss
+export PYTHONPATH=$ZENHOME/lib/python
+export PATH=$PATH:$ZENHOME/bin:<%= @java_bin %>
+export INSTANCE_HOME=$ZENHOME
