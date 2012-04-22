@@ -27,7 +27,7 @@ default['zca_build_server']['packages']['ubuntu'] =
 
 # additional packages that are required for redhat and derivatives
 default['zca_build_server']['packages']['redhat'] = 
-    %w{ perl-DBI rpm-build net-snmp net-snmp-utils gmp libgomp libxslt gcc-c++ libxml2-devel pango-devel liberation-mono-fonts liberation-sans-fonts liberation-serif-fonts}
+    %w{ perl-DBI rpm-build net-snmp net-snmp-utils gmp libgomp libxslt  libxslt-devel gcc-c++ libxml2-devel pango-devel liberation-mono-fonts liberation-sans-fonts liberation-serif-fonts}
     
 #TODO: pick SUSE packages
 default['zca_build_server']['packages']['suse'] = %w{ }
