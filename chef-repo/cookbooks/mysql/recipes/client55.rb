@@ -46,7 +46,11 @@ elsif platform?(%w{ ubuntu})
     end
 
     %w{mysql-client-5.5 libmysqlclient-dev}.each do |pkg|
+		#The packages from nathan-renniewaldock generate WARNING: The following packages cannot be authenticated!
+		#This causes chef to bomb. I'm not sure that is the most proper way to solve for this, but going to pass
+		# --allow-unauthenticated as an extra arg, just for this set
         package pkg do
+			options "--allow-unauthenticated"
             action :install
         end
     end # ubuntu
