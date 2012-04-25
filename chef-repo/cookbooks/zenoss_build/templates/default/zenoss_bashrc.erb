@@ -8,5 +8,7 @@ fi
 # User specific aliases and functions
 export ZENHOME=/opt/zenoss
 export PYTHONPATH=$ZENHOME/lib/python
-export PATH=$PATH:$ZENHOME/bin:<%= @java_bin %>
+# DP - Moving zenhome bin forward, as I got totally messed by picking up python2.6 on ubuntu
+# since this is isolated to only the zenoss user, I think this is safe enough
+export PATH=$ZENHOME/bin:$PATH:<%= @java_bin %>
 export INSTANCE_HOME=$ZENHOME
