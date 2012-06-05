@@ -7,8 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
-#Setup EPEL Repo
-include_recipe "yum::epel"
+if platform?(%w{ redhat centos fedora suse scientific amazon })
+    #Setup EPEL Repo
+    include_recipe "yum::epel"
+end
 
 #Disable IPTABLES:
 service "iptables" do

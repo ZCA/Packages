@@ -18,8 +18,8 @@ The following command, run as root, should install the Chef Client on most 'nix 
 
     curl -L http://www.opscode.com/chef/install.sh | sudo bash
 
-Configure Chef Solo
-===================
+Configure Chef Solo with a ZCA Flare
+====================================
 Run the following commands to get setup to use the ZCA build cookbooks::
 
       
