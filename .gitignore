@@ -5,6 +5,7 @@ chef-repo/chef-stacktrace.out
 chef-repo/*.bin
 chef-repo/*.tar.*
 chef-repo/*.tgz
+docs/_build
 
 
 chef-repo/Python-2.7.2/

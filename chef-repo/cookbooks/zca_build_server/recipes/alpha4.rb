@@ -7,6 +7,8 @@
 # All rights reserved - Do Not Redistribute
 #
 
+#Setup EPEL Repo
+include_recipe "yum::epel"
 
 #Disable IPTABLES:
 service "iptables" do

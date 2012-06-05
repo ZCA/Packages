@@ -43,8 +43,11 @@ when "centos","redhat","fedora","scientific","amazon"
 		default['zca_build_server']['build_packages'] += ["liberation-fonts-common"]
 	else
 		#Centos 5x its liberation-fonts, not common
-		default['zca_build_server']['build_packages'] += ["liberation-fonts", "protobuf-devel"]
+		default['zca_build_server']['build_packages'] -= ["liberation-mono-fonts", "liberation-sans-fonts", "liberation-serif-fonts"]
+		#default['zca_build_server']['build_packages'] += ["liberation-fonts", "protobuf-devel"]
+		default['zca_build_server']['build_packages'] += ["liberation-fonts"]
 		#Chef::Log.debug("TODO: Figure out what to do with protobuf-c package #{node['platform']} #{node['platform_version']}")
+
 	end
 
 

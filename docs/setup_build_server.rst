@@ -14,47 +14,9 @@ we will only by using Chef-Solo
 
 Install Chef Client
 ===================
-Centos 6
-********
-Run the following to install chef client on Centos 6::
+The following command, run as root, should install the Chef Client on most 'nix systems::
 
-   rpm -Uvh http://rbel.frameos.org/rbel6
-   yum -y install ruby ruby-devel ruby-ri ruby-rdoc ruby-shadow gcc gcc-c++ automake autoconf make curl dmidecode wget unzip
-   cd /tmp
-   curl -O http://production.cf.rubygems.org/rubygems/rubygems-1.8.10.tgz
-   tar zxf rubygems-1.8.10.tgz
-   cd rubygems-1.8.10
-   ruby setup.rb --no-format-executable
-   gem install chef --no-ri --no-rdoc
-   #Ensure it works
-   chef-solo -v
-   
-
-Centos 5
-********
-Run the following to install chef client on Centos 5::
-  
-   rpm -ivh http://rbel.co/rbel5
-   yum -y install ruby.x86_64 ruby-devel.x86_64 rubygems gcc
-   gem install chef --no-ri --no-rdoc
-   #Ensure it works
-   chef-solo -v
-   
-Ubuntu
-******
-Run the following to install chef client on Ubuntu::
-
-   sudo apt-get update
-   sudo apt-get install ruby ruby-dev libopenssl-ruby rdoc ri irb build-essential wget ssl-cert git-core
-   cd /tmp
-   wget http://production.cf.rubygems.org/rubygems/rubygems-1.8.10.tgz
-   tar zxf rubygems-1.8.10.tgz
-   cd rubygems-1.8.10
-   sudo ruby setup.rb --no-format-executable
-   sudo gem install chef --no-ri --no-rdoc
-   #Ensure it works
-   chef-solo -v
-
+    curl -L http://www.opscode.com/chef/install.sh | sudo bash
 
 Configure Chef Solo
 ===================
