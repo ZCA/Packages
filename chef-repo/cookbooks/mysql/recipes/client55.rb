@@ -11,8 +11,8 @@ include_recipe "mysql::cleanup_mysql"
 #Download MySQL RPMs
 arch="#{node['kernel']['machine']}"
 if platform?(%w{ redhat centos fedora suse scientific amazon })
-    Chef::Log.info("=======================================================================================")
-	rpm_list = ["MySQL-client-5.5.24-1.linux2.6.#{arch}.rpm", "MySQL-devel-5.5.24-1.linux2.6.#{arch}.rpm", "MySQL-shared-5.5.24-1.linux2.6.#{arch}.rpm"]
+    #TODO - Stop being a slacker and move version to an attribute with some auto-discovery for latest 
+	rpm_list = ["MySQL-client-5.5.25-1.linux2.6.#{arch}.rpm", "MySQL-devel-5.5.25-1.linux2.6.#{arch}.rpm", "MySQL-shared-5.5.25-1.linux2.6.#{arch}.rpm"]
 	Chef::Log.info("installing #{rpm_list}")
 	rpm_list.each do |rpm_file|
 		remote_file "/tmp/#{rpm_file}" do
