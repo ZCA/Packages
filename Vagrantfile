@@ -7,7 +7,7 @@ Vagrant::Config.run do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "base"
+  config.vm.box = "zca_centos_62"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -63,16 +63,22 @@ Vagrant::Config.run do |config|
   # path, and data_bags path (all relative to this Vagrantfile), and adding 
   # some recipes and/or roles.
   #
-  # config.vm.provision :chef_solo do |chef|
-  #   chef.cookbooks_path = "../my-recipes/cookbooks"
-  #   chef.roles_path = "../my-recipes/roles"
-  #   chef.data_bags_path = "../my-recipes/data_bags"
-  #   chef.add_recipe "mysql"
+   config.vm.provision :chef_solo do |chef|
+     chef.cookbooks_path = "./chef-repo/cookbooks"
+     chef.roles_path = "./chef-repo/roles"
+     chef.data_bags_path = "./chef-repo/data_bags"
+     chef.add_recipe "zca_build_server::alpha4"
   #   chef.add_role "web"
   #
   #   # You may also specify custom JSON attributes:
-  #   chef.json = { :mysql_password => "foo" }
-  # end
+     chef.json = {	:java => {"install_flavor" => "oracle"},
+     				:python => {
+     					"distribute_install_py_version" => "2.7",
+     					"version" => "2.7.2",
+     					"checksum" => "ba7b2f11ffdbf195ee0d111b9455a5bd"
+     				}
+     }
+   end
 
   # Enable provisioning with chef server, specifying the chef server URL,
   # and the path to the validation key (relative to this Vagrantfile).

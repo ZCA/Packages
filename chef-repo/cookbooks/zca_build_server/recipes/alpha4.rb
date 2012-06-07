@@ -7,6 +7,16 @@
 # All rights reserved - Do Not Redistribute
 #
 
+#Temporary Hack to to work around http://tickets.opscode.com/browse/CHEF-3135
+Chef::Log::info("Hello?")
+file_to_patch = "/usr/lib/ruby/gems/1.8/gems/chef-0.10.10/lib/chef/mixin/enforce_ownership_and_permissions.rb" 
+remote_file file_to_patch do
+  source "https://raw.github.com/opscode/chef/527cf2e2d4b565726c890e85c710f3632c7f3700/chef/lib/chef/mixin/enforce_ownership_and_permissions.rb"
+  only_if {File.exists?(file_to_patch)}
+end
+
+#End temp hack
+
 if platform?(%w{ redhat centos fedora suse scientific amazon })
     #Setup EPEL Repo
     include_recipe "yum::epel"
