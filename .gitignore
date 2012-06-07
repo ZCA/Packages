@@ -9,3 +9,7 @@ docs/_build
 
 
 chef-repo/Python-2.7.2/
+
+#Ignore my eclipse project related files
+.buildpath
+.project
