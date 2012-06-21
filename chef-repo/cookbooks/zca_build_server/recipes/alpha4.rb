@@ -17,9 +17,11 @@ end
 
 #End temp hack
 
-if platform?(%w{ redhat centos fedora suse scientific amazon })
-    #Setup EPEL Repo
-    include_recipe "yum::epel"
+case node['platform']
+when %w{ redhat centos fedora suse scientific amazon }
+  include_recipe "yum::epel"
+when "ubuntu"
+  include_recipe "apt"
 end
 
 #Disable IPTABLES:
