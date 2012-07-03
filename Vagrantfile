@@ -62,7 +62,11 @@ Vagrant::Config.run do |config|
 					"python"=> {"distribute_install_py_version" => "2.7", 
 								"version"=> "2.7.2", 
 								"checksum"=> "ba7b2f11ffdbf195ee0d111b9455a5bd"
-					 }
+					 },
+					 "mysql" => {"server_root_password" => "",
+								 "server_repl_password" => "",
+								 "server_debian_password" => ""
+								}
     			}
   end
 end

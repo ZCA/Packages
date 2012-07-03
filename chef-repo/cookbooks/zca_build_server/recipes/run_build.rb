@@ -29,8 +29,8 @@ execute "install.sh" do
 	user  "zenoss"
 	action :run
 end
-
 =end
+
 
 
 
@@ -46,3 +46,4 @@ execute "install.sh" do
 				'INSTANCE_HOME' => '$ZENHOME'
 			  })
 end
+

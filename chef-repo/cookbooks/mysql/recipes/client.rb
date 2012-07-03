@@ -32,6 +32,23 @@ when "ubuntu","debian"
   end
 when "freebsd"
   %w{mysql55-client}
+when "windows"
+  package_file = node['mysql']['client']['package_file']
+  remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
+    source node['mysql']['client']['url']
+    not_if { File.exists? "#{Chef::Config[:file_cache_path]}/#{package_file}" }
+  end
+
+  windows_package node['mysql']['client']['package_name'] do
+    source "#{Chef::Config[:file_cache_path]}/#{package_file}"
+  end
+  windows_path node['mysql']['client']['bin_dir'] do
+    action :add
+  end
+  def package(*args, &blk)
+    windows_package(*args, &blk)
+  end
+  [node['mysql']['client']['package_name']]
 else
   %w{mysql-client libmysqlclient-dev}
 end
@@ -43,17 +60,21 @@ mysql_packages.each do |mysql_pack|
 end
 
 if platform?(%w{ redhat centos fedora suse scientific amazon })
-  Chef::Log.info(node.platform_version)
-  if node.platform_version != "5.7"
-	#No package found on 5.7, so skipping
-	package 'ruby-mysql'
-  else
-	Chef::Log.info("Skipping ruby-mysql on #{node['platform']} #{node['platform_version']}")
-  end
+  package 'ruby-mysql'
 elsif platform?(%w{ debian ubuntu })
   package "libmysql-ruby"
 else
   gem_package "mysql" do
     action :install
+  end
+end
+
+if platform? 'windows'
+  ruby_block "copy libmysql.dll into ruby path" do
+    block do
+      require 'fileutils'
+      FileUtils.cp "#{node['mysql']['client']['lib_dir']}\\libmysql.dll", node['mysql']['client']['ruby_dir']
+    end
+    not_if { File.exist?("#{node['mysql']['client']['ruby_dir']}\\libmysql.dll") }
   end
 end

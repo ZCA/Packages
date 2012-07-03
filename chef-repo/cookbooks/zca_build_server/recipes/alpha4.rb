@@ -21,6 +21,14 @@ when %w{ redhat centos fedora suse scientific amazon }
   include_recipe "yum::epel"
 when "ubuntu"
   include_recipe "apt"
+  #Add external PPA for MySQL 5.5 Packages
+    apt_repository "mysql" do
+      uri "http://ppa.launchpad.net/nathan-renniewaldock/ppa/ubuntu"
+	  distribution node['lsb']['codename']
+      components ["main"]
+      keyserver "keyserver.ubuntu.com"
+      key "29A4B41A"
+    end
 end
 
 #Disable IPTABLES:
@@ -28,17 +36,12 @@ service "iptables" do
 	action :disable
 end
 
-# let's get the base build packages for whatever platform we're on
-include_recipe "zca_build_server::build_packages"
-
-
 #Subversion
 include_recipe "subversion"
 
 #MySQL
 #Come back to this
-include_recipe "mysql::server55"
-include_recipe "mysql::client55"
+include_recipe "mysql::server"
 
 #Memcached
 include_recipe "memcached"
@@ -53,6 +56,8 @@ include_recipe "java"
 #We need Maven as wel
 include_recipe "maven::maven3"
 
+# let's get the base build packages for whatever platform we're on
+include_recipe "zca_build_server::build_packages"
 
 #Python
 #Pretty sure Ubuntu has packages available, but rhel derivs need from source
